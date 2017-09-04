@@ -1,8 +1,8 @@
 
 var vehiclePassengers = [];
 var vehicles = [];
-var total_passenger_count = 0;
-var total_vehicle_count = 0;
+var people_count = 0;
+var vehicle_count = 0;
 
 var Vehicle = function(reg,modelName,color,passengers){
 
@@ -14,14 +14,14 @@ var Vehicle = function(reg,modelName,color,passengers){
   }];
 
 
-  var boardStatus = "off_board";
+  var boardStatus = "rejected";
 
   this.onBoard = function(){
-    boardStatus = "on_board";
+    boardStatus = "accepted";
   };
 
   this.offBoard = function(){
-    boardStatus = "off_board";
+    boardStatus = "rejected";
   };
 
   this.onBoardVehicle = function(){
@@ -51,15 +51,15 @@ var Vehicle = function(reg,modelName,color,passengers){
 
 function countVehiclePassengers(){
   for(i = 0; i < vehiclePassengers.length; i++ ){
-    total_passenger_count += vehiclePassengers[i]
+    people_count += vehiclePassengers[i]
   };
 };
 
 function countVehicles(){
-  total_vehicle_count = vehicles.length
+  vehicle_count = vehicles.length
 };
 
-
+var vehicle4 = new Vehicle('CA 123', 'BMW', 'Red', 250);
 var vehicle3 = new Vehicle('CA 123', 'BMW', 'Red', 4);
 var vehicle1 = new Vehicle('CA 123', 'BMW', 'Red', 5);
 var vehicle2 = new Vehicle('CA 456', 'Toyota', 'Blue', 5);
@@ -67,10 +67,22 @@ vehicle1.onBoard();
 vehicle1.onBoardVehicle();
 vehicle2.onBoardVehicle();
 vehicle3.onBoardVehicle();
+vehicle4.onBoardVehicle();
 vehicle1.about();
 
 countVehiclePassengers();
 countVehicles();
 
-console.log(total_passenger_count);
-console.log(total_vehicle_count);
+console.log(people_count);
+console.log(vehicle_count);
+
+var ferry1 = new Ferry(25,100, people_count, vehicle_count);
+
+ferry1.acceptPassenger();
+ferry1.rejectPassenger();
+ferry1.acceptVehicle();
+ferry1.rejectVehicle();
+ferry1.loadFerry();
+ferry1.aboutFerry();
+
+console.log(ferry1.aboutFerry());

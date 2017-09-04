@@ -1,72 +1,60 @@
-var Ferry = function(maxVehicles,minVehicles,passengers,staff,actualVehicles){
+var Ferry = function(vehicles,passengers, people_count, vehicle_count){
 
-  var ferry = {
-    maxVehicles: maxVehicles,
-    minVehicles: minVehicles,
+  var loadFerry = {
+    maxVehicles: vehicles,
     maxPassengers: passengers,
-    maxStaff: staff,
-    actualVehicles: actualVehicles,
+    actualPassengers: people_count,
+    actualVehicles: vehicle_count,
   };
 
-  var status = "in-sufficient" ;
+  var maximumVehicles = loadFerry.maxVehicles;
+  var maximumPassengers = loadFerry.maxPassengers;
 
-  this.sufficientCapacity = function(){
-    if(ferry.minVehicles < ferry.actualVehicles && ferry.maxVehicles > ferry.actualVehicles){
-      status = "sufficent"
+  var vehicleBoardStatus = "rejected";
+  var passengerBoardStatus = "accepted"
+
+  this.acceptPassenger = function(){
+
+    if(maximumPassengers > people_count){
+      passengerBoardStatus = "passengers accepted";
+    }
+
+  }
+
+  this.rejectPassenger = function(){
+    if(maximumPassengers < people_count){
+      passengerBoardStatus = "passengers rejected"
     }
   }
 
-  this.minCapacity = function(){
-    if(ferry.minVehicles == ferry.actualVehicles){
-        status = "minimum capacity" ;
+  this.acceptVehicle = function(){
+
+    if(maximumVehicles > vehicle_count ){
+      vehicleBoardStatus = "vehicle accepted";
     }
   };
 
-  this.maxCapacity = function(){
-    if(ferry.maxVehicles == ferry.actualVehicles){
-        status = "maximum capacity";
+  this.rejectVehicle = function(){
+
+    if(maximumVehicles < vehicle_count){
+      vehicleBoardStatus = "vehicle rejected";
     }
   };
 
-  this.overCapacity = function(){
-    if(ferry.maxVehicles < ferry.actualVehicles){
-      status = "over capacity";
-    }
+  this.loadFerry = function(){
+    return loadFerry;
   };
 
-  this.underCapacity = function(){
-    if(ferry.minVehicles > ferry.actualVehicles ){
-      status = "under capacity";
-    }
+  this.loadStatus = function(){
+    return loadStatus;
   };
 
-  this.boardFerry = function(){
-    return ferry;
+  this.aboutFerry = function(){
+    return "maxVehicles: " + loadFerry.maxVehicles +
+           "  maxPassengers: " + loadFerry.maxPassengers +
+           "  actualPassengers:  " + loadFerry.actualPassengers +
+           "  actualVehicles:  " + loadFerry.actualVehicles +
+           "  vehicleBoardStatus:  " + vehicleBoardStatus +
+           "  passengerBoardStatus:  " + passengerBoardStatus
   };
-
-  this.boardStatus = function(){
-    return status
-  };
-
-  this.about = function(){
-    return  "maxVehicles:  " + ferry.maxVehicles +
-            "  minVehicles:  " + ferry.minVehicles +
-            "  maxPassengers:  " + ferry.maxPassengers +
-            "  maxStaff:  " + ferry.maxStaff +
-            "  actualVehicles:  " + ferry.actualVehicles +
-            "  status:  " + status
-  };
-
 };
-
-
-var ferry1 = new Ferry(25, 5, 100, 10, 15)
-ferry1.boardFerry();
-ferry1.sufficientCapacity();
-ferry1.minCapacity();
-ferry1.maxCapacity();
-ferry1.overCapacity();
-ferry1.underCapacity();
-ferry1.boardStatus();
-ferry1.about();
-// console.log(ferry1.boardStatus());
